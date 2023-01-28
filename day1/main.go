@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"input"
+	"sort"
 	"strconv"
 	"sync"
 	"utils"
@@ -39,12 +40,17 @@ func main() {
 		wg.Wait()
 		close(channel)
 	}(elvesChannel, &wg)
-
 	maxCalories := 0
+	var sumElves []int
 	for elfCalorie := range elvesChannel {
-		if elfCalorie > maxCalories {
-			maxCalories = elfCalorie
-		}
+		sumElves = append(sumElves, elfCalorie)
+	}
+	sort.Slice(sumElves, func(i, j int) bool {
+		return sumElves[i] > sumElves[j]
+	})
+
+	for _, v := range sumElves[:3] {
+		maxCalories += v
 	}
 	fmt.Println("Final answer:", maxCalories)
 }
