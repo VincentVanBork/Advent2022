@@ -34,6 +34,7 @@ func main() {
 		wg.Add(1)
 		go utils.SumElements(elf, elvesChannel, &wg)
 	}
+
 	go func(channel chan int, wg *sync.WaitGroup) {
 		wg.Wait()
 		close(channel)
