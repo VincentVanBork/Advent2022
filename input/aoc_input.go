@@ -9,8 +9,8 @@ import (
 
 func CheckExists(dayInfo int) bool {
 	filepath := fmt.Sprintf("./day%d/input.txt", dayInfo)
-	println(filepath)
 	if _, err := os.Stat(filepath); err == nil {
+		println("exists:", filepath)
 		return true
 	}
 	return false
