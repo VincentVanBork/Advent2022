@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"input"
 	"strconv"
+	"sync"
 	"utils"
 )
 
@@ -27,5 +28,22 @@ func main() {
 		}
 	}
 	fmt.Println(elves[0])
+	var wg sync.WaitGroup
+	elvesChannel := make(chan int, len(elves))
+	for _, elf := range elves {
+		wg.Add(1)
+		go utils.SumElements(elf, elvesChannel, &wg)
+	}
+	go func(channel chan int, wg *sync.WaitGroup) {
+		wg.Wait()
+		close(channel)
+	}(elvesChannel, &wg)
 
+	maxCalories := 0
+	for elfCalorie := range elvesChannel {
+		if elfCalorie > maxCalories {
+			maxCalories = elfCalorie
+		}
+	}
+	fmt.Println("Final answer:", maxCalories)
 }
