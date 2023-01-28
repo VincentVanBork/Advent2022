@@ -10,8 +10,8 @@ import (
 )
 
 func main() {
-	if !input.CheckExists() {
-		input.Fetch()
+	if !input.CheckExists(1) {
+		input.Fetch(1)
 	} else {
 		fmt.Println("Input cached")
 	}
