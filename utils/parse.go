@@ -1,14 +1,13 @@
-package main
+package utils
 
 import (
 	"bufio"
 	"os"
-	"utils"
 )
 
 func GetLines(filePath string) []string {
 	file, err := os.Open(filePath)
-	utils.Check(err)
+	Check(err)
 	fileScanner := bufio.NewScanner(file)
 	fileScanner.Split(bufio.ScanLines)
 	var fileLines []string
@@ -16,10 +15,7 @@ func GetLines(filePath string) []string {
 	for fileScanner.Scan() {
 		fileLines = append(fileLines, fileScanner.Text())
 	}
-	file.Close()
+	defer file.Close()
 
-	// for _, line := range fileLines {
-	// 	fmt.Println(line)
-	// }
 	return fileLines
 }
