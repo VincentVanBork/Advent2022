@@ -17,11 +17,14 @@ func main() {
 	lines_length := len(lines)
 	var lastIndex = 0
 	for lineIndex, line := range lines {
+		fmt.Println("indx", lineIndex)
+
 		if lineIndex == lines_length-2 {
 			fmt.Println("lines", lines_length, lineIndex)
 			break
 		}
-		if lineIndex < lastIndex {
+		if lineIndex != lastIndex+1 && lineIndex != 0 {
+			fmt.Println("skipping", lineIndex, lastIndex)
 			continue
 		}
 		second_line := lines[lineIndex+1]
